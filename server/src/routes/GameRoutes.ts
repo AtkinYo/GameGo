@@ -1,9 +1,11 @@
 import { Request, Response, Router } from 'express'
 import { getGameByIdController } from '../controllers/gameController/getGameByIdController'
+import { getGamesByCount } from '../services/getGamesByCountService'
 
 const router = Router()
 
-router.get('/:id', async (req: Request, res: Response) => {
+// Get single game details by ID
+router.get('/id/:id', async (req: Request, res: Response) => {
   try {
     const gameId: number = req.params.id
     const gameDetails = await getGameByIdController(gameId)
@@ -19,10 +21,21 @@ router.get('/:id', async (req: Request, res: Response) => {
   }
 })
 
-router.get('/games')
+// Get an array of games by count
+router.get('/count/:count', async (req: Request, res: Response) => {
+  try {
+    const count: number = req.params.count
+    const getGames = await getGamesByCount(count)
+
+    if (count > 20) {
+      return res.status(404).json({ Error: 'Too many requests' })
+    } else {
+      res.json(getGames)
+    }
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+})
 
 module.exports = router
-
-// SETUP TESTING// SETUP TESTING// SETUP TESTING// SETUP TESTING// SETUP TESTING// SETUP TESTING// SETUP TESTING// SETUP TESTING// SETUP TESTING
-
-// access modifiers to interfaces?

@@ -2,10 +2,12 @@ import { getGameByIdService } from '../../services/GetGameByIdService'
 
 describe('Get Game by ID', () => {
   test('Fetch game by ID', async () => {
-    const gameId = 28
-    const gameDetails = await getGameByIdService(gameId)
+    const id = 28
+    const title = await getGameByIdService(id)
 
-    expect(gameDetails).toHaveProperty('id')
-    expect(gameDetails.id).toBe(gameId)
+    expect(title).toHaveProperty('id')
+    expect(title).toHaveProperty('name')
+    expect(title).toHaveProperty('slug')
+    expect(title.id).toBe(id)
   })
 })
