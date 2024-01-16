@@ -1,6 +1,8 @@
 import { Request, Response, Router } from 'express'
 import { getGameByIdController } from '../controllers/gameController/getGameByIdController'
 import { getGamesByCount } from '../services/getGamesByCountService'
+import { getGamesByGenreAndCount } from '../services/getGamesByGenreAndCountService'
+import { getGamesByGenreAndCountController } from '../controllers/gameController/getGamesByGenreAndCountController'
 
 const router = Router()
 
@@ -37,5 +39,7 @@ router.get('/count/:count', async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Internal Server Error' })
   }
 })
+
+router.get('/:genre/:count', getGamesByGenreAndCountController)
 
 module.exports = router
