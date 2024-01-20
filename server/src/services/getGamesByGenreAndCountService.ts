@@ -7,7 +7,7 @@ export const getGamesByGenreAndCount = (genre: string, count: number) => {
   const getGames = fetch(URL)
     .then((res) => res.json())
     .then((data) => {
-      const games: Game[] = data.results.map((gameData: any) => {
+      const games: Game[] = data.results.map((gameData: Game) => {
         const title: Game = {
           id: gameData.id,
           slug: gameData.slug,

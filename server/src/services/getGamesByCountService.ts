@@ -2,12 +2,12 @@ import Game from '../types/Game'
 import { apiConfig } from '../utils/apiConfig'
 
 export const getGamesByCount = (quantity: number) => {
-  const URL = `${apiConfig.BASE_URL}${apiConfig.GAMES_CATEGORY}${apiConfig.PAGE_SIZE}${quantity}&key=${apiConfig.API_KEY}`
+  const URL = `${apiConfig.BASE_URL}${apiConfig.GAMES_CATEGORY}${apiConfig.PAGE_SIZE_}${quantity}&key=${apiConfig.API_KEY}`
 
   const getGames = fetch(URL)
     .then((res) => res.json())
     .then((data) => {
-      const games: Game[] = data.results.map((gameData: any) => {
+      const games: Game[] = data.results.map((gameData: Game) => {
         const game: Game = {
           id: gameData.id,
           slug: gameData.slug,

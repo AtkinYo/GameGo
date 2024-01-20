@@ -7,6 +7,7 @@ export const apiConfig = {
   GAMES_CATEGORY: '/games',
   GENRE: '&genres=',
   PAGE_SIZE: '&page_size=',
+  PAGE_SIZE_: '?page_size',
   API_KEY: apiKey,
   genres: [
     'Action',

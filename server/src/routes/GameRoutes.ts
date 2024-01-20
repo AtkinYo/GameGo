@@ -1,45 +1,17 @@
-import { Request, Response, Router } from 'express'
+import { Router } from 'express'
 import { getGameByIdController } from '../controllers/gameController/getGameByIdController'
-import { getGamesByCount } from '../services/getGamesByCountService'
-import { getGamesByGenreAndCount } from '../services/getGamesByGenreAndCountService'
 import { getGamesByGenreAndCountController } from '../controllers/gameController/getGamesByGenreAndCountController'
+import { getGamesByCountController } from '../controllers/gameController/getGamesByCountController'
 
 const router = Router()
 
-// Get single game details by ID
-router.get('/id/:id', async (req: Request, res: Response) => {
-  try {
-    const gameId: number = req.params.id
-    const gameDetails = await getGameByIdController(gameId)
+// Get single title by ID
+router.get('/id/:id', getGameByIdController)
 
-    if (!gameDetails.id) {
-      res.status(404).json({ Error: ` ${gameId} is not a valid ID.` })
-    } else {
-      return res.status(200).json(gameDetails)
-    }
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ error: 'Internal Server Error' })
-  }
-})
+// Get an array of games by count - less than or equal to 20
+router.get('/count/:count', getGamesByCountController)
 
-// Get an array of games by count
-router.get('/count/:count', async (req: Request, res: Response) => {
-  try {
-    const count: number = req.params.count
-    const getGames = await getGamesByCount(count)
-
-    if (count > 20) {
-      return res.status(404).json({ Error: 'Too many requests' })
-    } else {
-      res.json(getGames)
-    }
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ error: 'Internal Server Error' })
-  }
-})
-
+// Get games by genre and count
 router.get('/:genre/:count', getGamesByGenreAndCountController)
 
 module.exports = router
